@@ -10,16 +10,16 @@ Yeoman Generators need to be run from your global `node_modules` directory (e.g:
 
 In order to do this, you have two options
 
-* Simply place the `generator-helios-ui` directory into this global `node_modules` directory
+* Simply place the `generator-boilerplate` directory into this global `node_modules` directory
 
 **OR**
 
-* Place the `generator-helios-ui` directory wherever you want, open a `cmd`, navigate to the location of the folder and run `npm link`. This will create an alias in your global `node_modules` directory, pointing to wherever you've stored the `generator-helios-ui` directory
+* Place the `generator-boilerplate` directory wherever you want, open a `cmd`, navigate to the location of the folder and run `npm link`. This will create an alias in your global `node_modules` directory, pointing to wherever you've stored the `generator-boilerplate` directory
 
 ## How to run
 * Open up a `cmd` prompt
 * Navigate to the working directory of your project
-* Run `yo helios-ui`
+* Run `yo boilerplate`
 
 You will then be able to run through the Generator, configuring your project and choosing which libraries to include
 
