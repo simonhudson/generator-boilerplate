@@ -60,6 +60,12 @@ module.exports = generator.Base.extend({
         return gulpTasks;
     },
 
+    _urlRoot: function() {
+        var urlRoot = this.config.get('dest_root').split('htdocs');
+            urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + '/app/';
+        return urlRoot;
+    },
+
     _npmUpdateDependencies: function(thePackage, version) {
         var packageContents = this.fs.readJSON(this.config.get('dest_root') + '\\package.json');
             packageContents.dependencies[thePackage] = '*';
@@ -157,6 +163,7 @@ module.exports = generator.Base.extend({
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
+                'src_layout'            : this.destinationPath() + '\\src\\layout\\',
                 'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
                 'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
@@ -219,7 +226,8 @@ module.exports = generator.Base.extend({
                 this.config.get('template_gulp') + '/**/*',
                 this.config.get('dest_root'),
                 {
-                    gulpTasks:      this._gulpTasks()
+                    gulpTasks: this._gulpTasks(),
+                    destRoot: this._urlRoot()
                 }
             );
 
@@ -229,7 +237,7 @@ module.exports = generator.Base.extend({
             this.fs.copyTpl(
                 this.config.get('template_layout') + '/*.php',
                 this.destinationPath(
-                    this.config.get('dest_layout')),
+                    this.config.get('src_layout')),
                     {
                         projectName: this.config.get('projectName')
                     }
@@ -256,15 +264,12 @@ module.exports = generator.Base.extend({
 
         copyTests: function() {
 
-            var urlRoot = this.config.get('dest_root').split('htdocs');
-                urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + '/app/';
-
             this.fs.copyTpl(
                 this.config.get('template_tests') + '/**/*',
                 this.destinationPath(
                     this.config.get('dest_tests')),
                     {
-                        destRoot: urlRoot,
+                        destRoot: this._urlRoot(),
                         projectName: this.config.get('projectName')
                     }
             );

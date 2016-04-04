@@ -18,28 +18,28 @@ var config = {
 
 var config = {
     src: {
-        controllers:    config.src.assets + 'js/controllers/',
         css:            config.src.assets + 'css/',
         fonts:          config.src.assets + 'fonts/',
-        pages:           dirs.src + 'pages/',
+        pages:          dirs.src + 'pages/',
         imgs:           config.src.assets + 'imgs/',
         js:             config.src.assets + 'js/',
+        layout:         dirs.src + 'layout/',
         libs:           config.src.assets + 'libs/',
     },
     watch: {
-        controllers:    config.watch.assets + 'js/controllers/**/*.js',
         css:            config.watch.assets + 'css/**/*.{less,scss,css}',
-        pages:           dirs.src + 'pages/**/*.{html,php}',
+        pages:          dirs.src + 'pages/**/*.{html,php}',
         js:             config.watch.assets + 'js/**/*.js',
         imgs:           config.watch.assets + 'imgs/**/*.{gif,jpg,jpeg,png,svg}',
+        layout:          dirs.src + 'layout/**/*.{html,php}'
     },
     dest: {
         css:        dirs.dest + 'assets/css/',
         fonts:      dirs.dest + 'assets/fonts/',
         imgs:       dirs.dest + 'assets/imgs/',
         js:         dirs.dest + 'assets/js/',
+        layout:     dirs.dest + 'layout/',
         libs:       dirs.dest + 'assets/libs/',
-        views:      dirs.dest + 'views/',
         root:       dirs.dest
     }
 
@@ -126,6 +126,14 @@ gulp.task('imagemin', ['delimgs'], function () {
 });
 
 /***
+Copy layout
+***/
+gulp.task('copylayout', function() {
+    return gulp.src(config.src.layout + '**/*.{html,php}')
+        .pipe(gulp.dest(config.dest.layout));
+});
+
+/***
 Copy pages
 ***/
 gulp.task('copypages', function() {
@@ -138,31 +146,31 @@ gulp.task(
         'minifycss',
         'minifylibs',
         'imagemin',
-        'copypages'
+        'copypages',
+        'copylayout'
     ]
 );
 
 gulp.task('serve', ['default'], function () {
     gutil.log('Initiating watch');
 
-    // browserSync = browserSync.create();
-    // browserSync.init({
-    //     notify: true,
-    //     server: {
-    //         baseDir: config.dest.root
-    //     },
-    //     files: [
-    //         config.dest.root,
-    //         config.dest.css,
-    //         config.dest.js,
-    //         config.dest.libs,
-    //         config.dest.views,
-    //         config.dest.root
-    //     ],
-    //     injectChanges: true
-    // });
+    browserSync = browserSync.create();
+    browserSync.init({
+        notify: true,
+        proxy: '<%= destRoot %>',
+        files: [
+            config.dest.root,
+            config.dest.css,
+            config.dest.js,
+            config.dest.libs,
+            config.dest.views,
+            config.dest.root
+        ],
+        injectChanges: true
+    });
 
     gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss']);
     gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs']);
+    gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout']);
     gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages']);
 });
