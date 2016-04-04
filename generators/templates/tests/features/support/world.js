@@ -4,7 +4,7 @@ function World() {
 
     this.browser = new Zombie(); // this.browser will be available in step definitions
 
-    this.root = 'http://localhost:3000/';
+    this.root = '<%= destRoot %>';
     this.pages = {
         home: {
             url: this.root + ''

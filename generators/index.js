@@ -39,6 +39,10 @@ module.exports = generator.Base.extend({
         this.log('\n');
     },
 
+    _getUrlPath: function(path) {
+        return path.split(this.destinationPath())[1].replace(/\\/g, '/');
+    },
+
     _gulpTasks: function() {
         var gulpTasks = {
             bower: 'main-bower-files',
@@ -148,7 +152,7 @@ module.exports = generator.Base.extend({
                 'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
-                'dest_tests'           : this.destinationPath() + '\\app\\tests\\',
+                'dest_tests'            : this.destinationPath(),
 
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
@@ -233,11 +237,16 @@ module.exports = generator.Base.extend({
         },
 
         copyTests: function() {
+
+            var urlRoot = this.config.get('dest_root').split('htdocs');
+                urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + '/app/';
+
             this.fs.copyTpl(
                 this.config.get('template_tests') + '/**/*',
                 this.destinationPath(
                     this.config.get('dest_tests')),
                     {
+                        destRoot: urlRoot,
                         projectName: this.config.get('projectName')
                     }
             );
