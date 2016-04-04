@@ -9,6 +9,11 @@ Feature: Home page accessibility
         When the "Home" page loads
         Then there should be a "lang" attribute with a valid value
 
+    Scenario: Skip links
+        Given I am a user on the "Home" page
+        When the "Home" page loads
+        Then the page should have skip links
+
     Scenario: Single H1 element
         Given I am a user on the "Home" page
         When the "Home" page loads

@@ -15,3 +15,11 @@
 <link rel="shortcut icon" href="./assets/imgs/favicon.ico">
 </head>
 <body>
+
+    <nav class="access-nav">
+        <ul>
+            <li class="access-nav__item">
+                <a class="access-nav__link" href="#main-content">Skip to main content</a>
+            </li>
+        </ul>
+    </nav>
