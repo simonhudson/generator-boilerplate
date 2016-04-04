@@ -51,6 +51,57 @@ module.exports = generator.Base.extend({
                 '*                      *\n' +
                 '************************\n';
             this.log(message);
+        },
+
+        clean: function() {
+
+            this.config.delete('useAngular');
+            this.config.delete('useBootstrap');
+            this.config.delete('useJquery');
+
+            var done = this.async(),
+                self = this;
+            
+            del(this.destinationPath() + '/**/*', function() {
+                del(
+                    [
+                        self.destinationPath() + '/.yo-rc.json',
+                        self.destinationPath() + '/.gitignore',
+                        self.destinationPath() + '/.sass-cache'
+                    ], function() {
+                    self.config.save();
+                    done();
+                });
+            });
+
+        }
+
+    },
+
+    prompting: {
+
+        projectSetup: function() {
+            var done = this.async();
+            this.prompt({
+                type    : 'input',
+                name    : 'name',
+                message : 'Your project name',
+                default : this.appname // Default to current folder name
+            }, function(data) {
+                this.config.set({'projectName' : data.name });
+                var projectNameSlug = this.config.get('projectName');
+                    projectNameSlug = projectNameSlug.replace(/\s+/g, '-');
+                    projectNameSlug = projectNameSlug.toLowerCase();
+                this.config.set('projectNameSlug', projectNameSlug);
+
+                done();
+            }.bind(this));
+        },
+
+        endSetup: function() {
+            this._logLineBreak();
+            this.log('Setting up "' + this.config.get('projectName') + '"');
+            this._logSeparator();
         }
 
     }
