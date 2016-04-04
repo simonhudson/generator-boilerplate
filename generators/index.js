@@ -45,7 +45,6 @@ module.exports = generator.Base.extend({
 
     _gulpTasks: function() {
         var gulpTasks = {
-            bower:          'main-bower-files',
             browserSync:    'browser-sync',
             concat:         'gulp-concat',
             cucumber:       'gulp-cucumber',
