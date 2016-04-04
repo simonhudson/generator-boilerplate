@@ -39,10 +39,6 @@ module.exports = generator.Base.extend({
         this.log('\n');
     },
 
-    _getUrlPath: function(path) {
-        return path.split(this.destinationPath())[1].replace(/\\/g, '/');
-    },
-
     _gulpTasks: function() {
         var gulpTasks = {
             browserSync:    'browser-sync',
