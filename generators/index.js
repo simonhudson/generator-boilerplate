@@ -104,6 +104,62 @@ module.exports = generator.Base.extend({
             this._logSeparator();
         }
 
+    },
+
+    configuring: {
+
+        setDirs: function() {
+
+            var dirs = {
+                'template_css'          : this.templatePath() + '\\css\\',
+                'template_gulp'         : this.templatePath() + '\\gulp\\',
+                'template_imgs'         : this.templatePath() + '\\imgs\\',
+                'template_js'           : this.templatePath() + '\\js\\',
+                'template_layout'       : this.templatePath() + '\\layout\\',
+                'template_libs'         : this.templatePath() + '\\libs\\',
+                'template_pages'        : this.templatePath() + '\\pages\\',
+                'template_tests'        : this.templatePath() + '\\tests\\',
+
+                'dest_root'             : this.destinationPath(),
+                'dest_app'              : this.destinationPath() + '\\app\\',
+                'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
+                'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
+                'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
+
+                'src_root'              : this.destinationPath() + '\\src\\',
+                'src_assets'            : this.destinationPath() + '\\src\\assets\\',
+                'src_bower_components'  : this.destinationPath() + '\\bower_components\\',
+                'src_controllers'       : this.destinationPath() + '\\src\\assets\\js\\controllers\\',
+                'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
+                'src_html'              : this.destinationPath() + '\\src\\html\\',
+                'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
+                'src_js'                : this.destinationPath() + '\\src\\assets\\js\\',
+                'src_views'             : this.destinationPath() + '\\src\\views\\'
+            };
+
+            for (var i in dirs) {
+                this.config.set(i, dirs[i]);
+                mkdir(this.config.get(i));
+            }
+
+        },
+
+    },
+
+    writing: {
+
+        initialFiles: function() {
+            this.fs.write(this.config.get('dest_root') + '/README.md', '# ' + this.config.get('projectName'));
+            this.fs.write(
+                this.config.get('dest_root') + '/.gitignore',
+                    'node_modules\n' +
+                    '.sass-cache\n' +
+                    'bower_components\n' +
+                    'app\n' +
+                    '.yo-rc.json'
+                );
+        }
+
     }
 
 });
