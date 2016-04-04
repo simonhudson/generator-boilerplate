@@ -221,6 +221,17 @@ module.exports = generator.Base.extend({
             );
         },
 
+        copyPages: function() {
+            this.fs.copyTpl(
+                this.config.get('template_pages') + '/**/*.php',
+                this.destinationPath(
+                    this.config.get('dest_app')),
+                    {
+                        projectName: this.config.get('projectName')
+                    }
+            );
+        },
+
         copyTests: function() {
             this.fs.copyTpl(
                 this.config.get('template_tests') + '/**/*',
