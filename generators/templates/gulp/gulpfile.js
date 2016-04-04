@@ -141,13 +141,24 @@ gulp.task('copypages', function() {
         .pipe(gulp.dest(config.dest.root));
 });
 
+/***
+Cucumber
+***/
+gulp.task('cucumber', function() {
+    return gulp.src('features/*').pipe(cucumber({
+        'steps': 'features/step-definitions/**/*.js',
+        'support': 'features/support/*.js'
+    }));
+});
+
 gulp.task(
     'default', [
         'minifycss',
         'minifylibs',
         'imagemin',
         'copypages',
-        'copylayout'
+        'copylayout',
+        'cucumber'
     ]
 );
 
@@ -169,8 +180,8 @@ gulp.task('serve', ['default'], function () {
         injectChanges: true
     });
 
-    gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss']);
-    gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs']);
-    gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout']);
-    gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages']);
+    gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss', 'cucumber']);
+    gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs', 'cucumber']);
+    gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout', 'cucumber']);
+    gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages', 'cucumber']);
 });

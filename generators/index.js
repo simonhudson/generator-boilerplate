@@ -45,16 +45,17 @@ module.exports = generator.Base.extend({
 
     _gulpTasks: function() {
         var gulpTasks = {
-            bower: 'main-bower-files',
-            browserSync: 'browser-sync',
-            concat: 'gulp-concat',
-            del: 'del',
-            gutil: 'gulp-util',
-            imagemin: 'gulp-imagemin',
-            minifyCss: 'gulp-minify-css',
-            rename: 'gulp-rename',
-            sass: 'gulp-ruby-sass',
-            uglify: 'gulp-uglify'
+            bower:          'main-bower-files',
+            browserSync:    'browser-sync',
+            concat:         'gulp-concat',
+            cucumber:       'gulp-cucumber',
+            del:            'del',
+            gutil:          'gulp-util',
+            imagemin:       'gulp-imagemin',
+            minifyCss:      'gulp-minify-css',
+            rename:         'gulp-rename',
+            sass:           'gulp-ruby-sass',
+            uglify:         'gulp-uglify'
         };
 
         return gulpTasks;
