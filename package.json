@@ -1,0 +1,22 @@
+{
+  "name": "generator-boilerplate",
+  "version": "1.0.0",
+  "description": "Yeoman Generator for boilerplate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/simonhudson/generator-boilerplate.git"
+  },
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/simonhudson/generator-boilerplate/issues"
+  },
+  "homepage": "https://github.com/simonhudson/generator-boilerplate#readme"
+}
