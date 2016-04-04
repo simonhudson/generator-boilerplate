@@ -89,10 +89,6 @@ module.exports = generator.Base.extend({
 
         clean: function() {
 
-            this.config.delete('useAngular');
-            this.config.delete('useBootstrap');
-            this.config.delete('useJquery');
-
             var done = this.async(),
                 self = this;
             
