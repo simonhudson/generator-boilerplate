@@ -8,9 +8,6 @@ function World() {
     this.pages = {
         home: {
             url: this.root + ''
-        },
-        about: {
-            url: this.root + '<% if (useAngular) { %>#/about<% } else { %>about.html<% } %>'
         }
     };
 

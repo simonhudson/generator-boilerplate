@@ -39,6 +39,29 @@ module.exports = generator.Base.extend({
         this.log('\n');
     },
 
+    _gulpTasks: function() {
+        var gulpTasks = {
+            bower: 'main-bower-files',
+            browserSync: 'browser-sync',
+            concat: 'gulp-concat',
+            del: 'del',
+            gutil: 'gulp-util',
+            imagemin: 'gulp-imagemin',
+            minifyCss: 'gulp-minify-css',
+            rename: 'gulp-rename',
+            sass: 'gulp-ruby-sass',
+            uglify: 'gulp-uglify'
+        };
+
+        return gulpTasks;
+    },
+
+    _npmUpdateDependencies: function(thePackage, version) {
+        var packageContents = this.fs.readJSON(this.config.get('dest_root') + '\\package.json');
+            packageContents.dependencies[thePackage] = '*';
+        this.fs.writeJSON(this.config.get('dest_root') + '\\package.json', packageContents);
+    },
+
     initializing: {
 
         greeting: function() {
@@ -125,16 +148,14 @@ module.exports = generator.Base.extend({
                 'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
+                'dest_tests'           : this.destinationPath() + '\\app\\tests\\',
 
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
-                'src_bower_components'  : this.destinationPath() + '\\bower_components\\',
-                'src_controllers'       : this.destinationPath() + '\\src\\assets\\js\\controllers\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
                 'src_html'              : this.destinationPath() + '\\src\\html\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
-                'src_js'                : this.destinationPath() + '\\src\\assets\\js\\',
-                'src_views'             : this.destinationPath() + '\\src\\views\\'
+                'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
             };
 
             for (var i in dirs) {
@@ -160,11 +181,51 @@ module.exports = generator.Base.extend({
                 );
         },
 
+        npmInit: function() {
+            var pkg = {
+                name: this.config.get('projectNameSlug'),
+                version: '1.0.0',
+                description: this.config.get('projectName'),
+                dependencies: {},
+                devDependencies: {}
+            };
+            this.fs.write(this.destinationPath('package.json'), JSON.stringify(pkg, null, 4));
+        },
+
+        writeNpmDependencies: function() {
+            
+            // Sass
+            this._npmUpdateDependencies('sass');
+
+            // Gulp
+            this._npmUpdateDependencies('gulp');
+            var gulpTasks = this._gulpTasks();
+            for (var i in gulpTasks) {
+                this._npmUpdateDependencies(gulpTasks[i]);
+            }
+
+            // Testing
+            this._npmUpdateDependencies('cucumber');
+            this._npmUpdateDependencies('zombie');
+
+        },
+
         copyLayout: function() {
             this.fs.copyTpl(
                 this.config.get('template_layout') + '/*.php',
                 this.destinationPath(
                     this.config.get('dest_layout')),
+                    {
+                        projectName: this.config.get('projectName')
+                    }
+            );
+        },
+
+        copyTests: function() {
+            this.fs.copyTpl(
+                this.config.get('template_tests') + '/**/*',
+                this.destinationPath(
+                    this.config.get('dest_tests')),
                     {
                         projectName: this.config.get('projectName')
                     }
