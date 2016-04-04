@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/simonhudson/generator-boilerplate/issues"
   },
-  "homepage": "https://github.com/simonhudson/generator-boilerplate#readme"
+  "homepage": "https://github.com/simonhudson/generator-boilerplate#readme",
+  "dependencies": {
+    "yeoman-generator": "^0.22.5"
+  }
 }
