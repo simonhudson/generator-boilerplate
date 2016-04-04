@@ -157,7 +157,6 @@ module.exports = generator.Base.extend({
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
-                'src_html'              : this.destinationPath() + '\\src\\html\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
                 'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
             };
