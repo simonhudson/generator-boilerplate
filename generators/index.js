@@ -158,6 +158,17 @@ module.exports = generator.Base.extend({
                     'app\n' +
                     '.yo-rc.json'
                 );
+        },
+
+        copyLayout: function() {
+            this.fs.copyTpl(
+                this.config.get('template_layout') + '/*.php',
+                this.destinationPath(
+                    this.config.get('dest_layout')),
+                    {
+                        projectName: this.config.get('projectName')
+                    }
+            );
         }
 
     }
