@@ -270,6 +270,27 @@ module.exports = generator.Base.extend({
             );
         }
 
+    },
+
+    install: {
+
+        npmInstall: function() {
+            this.npmInstall();
+        },
+
+    },
+
+    end: {
+        finish: function() {
+            var message =
+                '\n\n' +
+                '********************************\n' +
+                '*                              *\n' +
+                '*  ALL DONE!                   *\n' +
+                '*                              *\n' +
+                '********************************\n';
+            this.log(message);
+        }
     }
 
 });
