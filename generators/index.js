@@ -157,6 +157,7 @@ module.exports = generator.Base.extend({
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
+                'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
                 'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
             };
@@ -213,6 +214,17 @@ module.exports = generator.Base.extend({
 
         },
 
+        copyGulp: function() {
+            this.fs.copyTpl(
+                this.config.get('template_gulp') + '/**/*',
+                this.config.get('dest_root'),
+                {
+                    gulpTasks:      this._gulpTasks()
+                }
+            );
+
+        },
+
         copyLayout: function() {
             this.fs.copyTpl(
                 this.config.get('template_layout') + '/*.php',
@@ -228,7 +240,7 @@ module.exports = generator.Base.extend({
             this.fs.copyTpl(
                 this.config.get('template_pages') + '/**/*.php',
                 this.destinationPath(
-                    this.config.get('dest_app')),
+                    this.config.get('src_pages')),
                     {
                         projectName: this.config.get('projectName')
                     }
