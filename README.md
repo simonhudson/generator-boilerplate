@@ -26,7 +26,7 @@ You will then be able to run through the Generator, configuring your project and
 ## Starting your app
 Once the Generator has successfully set up your codebase, simply run `gulp serve`, which will start an instance of Chrome and load your app.
 
-The Gulp task will watch for changes to specified files in the '/src' directory, and will automatically run the necessary Gulp tasks and reload your browser. [Browsersync](https://www.browsersync.io) is also included so you can open your app in multiple browsers which will all reload as necessary.
+The Gulp task will watch for changes to specified files in the `/src` directory, and will automatically run the necessary Gulp tasks and reload your browser. [Browsersync](https://www.browsersync.io) is also included so you can open your app in multiple browsers which will all reload as necessary.
 
 ## Running tests
 As part of the Yeoman Generator, your project will have some sample Cucumber tests (running via the [Zombie](https://github.com/assaf/zombie) headless browser).
