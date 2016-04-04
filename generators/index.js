@@ -236,6 +236,13 @@ module.exports = generator.Base.extend({
             );
         },
 
+        copyCss: function() {
+            this.fs.copyTpl(
+                this.config.get('template_css') + '**/*',
+                this.config.get('src_css')
+            );
+        },
+
         copyTests: function() {
 
             var urlRoot = this.config.get('dest_root').split('htdocs');

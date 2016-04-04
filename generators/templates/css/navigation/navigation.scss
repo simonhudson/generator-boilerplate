@@ -1,0 +1,16 @@
+//
+// Navigation
+//
+main a {
+    @include animate(border-bottom);
+    border-bottom:1px solid rgba($palette-body, .20);
+    color:$palette-accent-primary;
+    text-decoration:none;
+
+    &:hover,
+    &:focus {
+        border-bottom:1px solid $palette-accent-primary;
+        text-decoration:none;
+    }
+
+}

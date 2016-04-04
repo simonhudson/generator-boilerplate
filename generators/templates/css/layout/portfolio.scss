@@ -1,0 +1,41 @@
+//
+// Portfolio
+//
+.portfolio__item {
+    @include full-width();
+    @include padding-y($spacing-lg, $spacing);
+    background:top left no-repeat #fff;
+}
+.portfolio__item:nth-of-type(2n) {
+    background:#E8EFF2;
+}
+.portfolio__img {
+    @include full-width();
+    height:auto;
+}
+.portfolio__client {
+    @include strong();
+    padding-bottom:0;
+}
+.portfolio__title {
+    color:$palette-accent-primary;
+}
+.tools__list {
+    @include margin-b();
+}
+.tools__item {
+    color:rgba($palette-accent-secondary, .75);
+    display:inline;
+
+    &:after {
+        content:', ';
+    }
+
+    &:last-of-type {
+
+        &:after {
+            content:'';
+        }
+
+    }
+}
