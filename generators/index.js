@@ -92,7 +92,8 @@ module.exports = generator.Base.extend({
                     [
                         self.destinationPath() + '/.yo-rc.json',
                         self.destinationPath() + '/.gitignore',
-                        self.destinationPath() + '/.sass-cache'
+                        self.destinationPath() + '/.sass-cache',
+                        self.destinationPath() + '/node_modules',
                     ], function() {
                     self.config.save();
                     done();
