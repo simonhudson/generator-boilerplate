@@ -22,6 +22,7 @@ var config = {
         css:            config.src.assets + 'css/',
         fonts:          config.src.assets + 'fonts/',
         functions:      dirs.src + 'functions/',
+        includes:         dirs.src + 'includes/',
         pages:          dirs.src + 'pages/',
         imgs:           config.src.assets + 'imgs/',
         js:             config.src.assets + 'js/',
@@ -32,6 +33,7 @@ var config = {
         config:         dirs.src + 'config/**/*.{html,php}',
         css:            config.watch.assets + 'css/**/*.{less,scss,css}',
         functions:      dirs.src + 'functions/**/*.{html,php}',
+        includes:       dirs.src + 'includes/**/*.{html,php}',
         pages:          dirs.src + 'pages/**/*.{html,php}',
         js:             config.watch.assets + 'js/**/*.js',
         imgs:           config.watch.assets + 'imgs/**/*.{gif,jpg,jpeg,png,svg}',
@@ -42,6 +44,7 @@ var config = {
         css:        dirs.dest + 'assets/css/',
         fonts:      dirs.dest + 'assets/fonts/',
         functions:  dirs.dest + 'functions/',
+        includes:   dirs.dest + 'includes/',
         imgs:       dirs.dest + 'assets/imgs/',
         js:         dirs.dest + 'assets/js/',
         layout:     dirs.dest + 'layout/',
@@ -153,6 +156,14 @@ Copy config
 gulp.task('copyconfig', function() {
     return gulp.src(config.src.config + '**/*.{html,php}')
         .pipe(gulp.dest(config.dest.config));
+});
+
+/***
+Copy includes
+***/
+gulp.task('copyincludes', function() {
+    return gulp.src(config.src.includes + '**/*.{html,php}')
+        .pipe(gulp.dest(config.dest.includes));
 });
 
 /***
