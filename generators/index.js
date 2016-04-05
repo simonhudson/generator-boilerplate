@@ -138,8 +138,10 @@ module.exports = generator.Base.extend({
         setDirs: function() {
 
             var dirs = {
+                'template_config'       : this.templatePath() + '\\config\\',
                 'template_css'          : this.templatePath() + '\\css\\',
                 'template_fonts'        : this.templatePath() + '\\fonts\\',
+                'template_functions'    : this.templatePath() + '\\functions\\',
                 'template_gulp'         : this.templatePath() + '\\gulp\\',
                 'template_imgs'         : this.templatePath() + '\\imgs\\',
                 'template_js'           : this.templatePath() + '\\js\\',
@@ -151,14 +153,18 @@ module.exports = generator.Base.extend({
                 'dest_root'             : this.destinationPath(),
                 'dest_app'              : this.destinationPath() + '\\app\\',
                 'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
+                'dest_config'           : this.destinationPath() + '\\app\\config\\',
+                'dest_functions'           : this.destinationPath() + '\\app\\functions\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
                 'dest_tests'            : this.destinationPath(),
 
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
+                'src_config'            : this.destinationPath() + '\\src\\config\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
                 'src_fonts'             : this.destinationPath() + '\\src\\assets\\fonts\\',
+                'src_functions'         : this.destinationPath() + '\\src\\functions\\',
                 'src_layout'            : this.destinationPath() + '\\src\\layout\\',
                 'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
@@ -248,6 +254,24 @@ module.exports = generator.Base.extend({
                     {
                         projectName: this.config.get('projectName')
                     }
+            );
+        },
+
+        copyConfig: function() {
+            this.fs.copyTpl(
+                this.config.get('template_config') + '/**/*.php',
+                this.destinationPath(
+                    this.config.get('src_config')),
+                    {
+                        projectName: this.config.get('projectName')
+                    }
+            );
+        },
+
+        copyFunctions: function() {
+            this.fs.copy(
+                this.config.get('template_functions') + '**/*',
+                this.config.get('src_functions')
             );
         },
 

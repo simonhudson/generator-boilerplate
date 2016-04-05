@@ -18,8 +18,10 @@ var config = {
 
 var config = {
     src: {
+        config:         dirs.src + 'config/',
         css:            config.src.assets + 'css/',
         fonts:          config.src.assets + 'fonts/',
+        functions:      dirs.src + 'functions/',
         pages:          dirs.src + 'pages/',
         imgs:           config.src.assets + 'imgs/',
         js:             config.src.assets + 'js/',
@@ -27,15 +29,19 @@ var config = {
         libs:           config.src.assets + 'libs/',
     },
     watch: {
+        config:         dirs.src + 'config/**/*.{html,php}',
         css:            config.watch.assets + 'css/**/*.{less,scss,css}',
+        functions:      dirs.src + 'functions/**/*.{html,php}',
         pages:          dirs.src + 'pages/**/*.{html,php}',
         js:             config.watch.assets + 'js/**/*.js',
         imgs:           config.watch.assets + 'imgs/**/*.{gif,jpg,jpeg,png,svg}',
-        layout:          dirs.src + 'layout/**/*.{html,php}'
+        layout:         dirs.src + 'layout/**/*.{html,php}'
     },
     dest: {
+        config:     dirs.dest + 'config/',
         css:        dirs.dest + 'assets/css/',
         fonts:      dirs.dest + 'assets/fonts/',
+        functions:  dirs.dest + 'functions/',
         imgs:       dirs.dest + 'assets/imgs/',
         js:         dirs.dest + 'assets/js/',
         layout:     dirs.dest + 'layout/',
@@ -142,6 +148,22 @@ gulp.task('copylayout', function() {
 });
 
 /***
+Copy config
+***/
+gulp.task('copyconfig', function() {
+    return gulp.src(config.src.config + '**/*.{html,php}')
+        .pipe(gulp.dest(config.dest.config));
+});
+
+/***
+Copy functions
+***/
+gulp.task('copyfunctions', function() {
+    return gulp.src(config.src.functions + '**/*.{html,php}')
+        .pipe(gulp.dest(config.dest.functions));
+});
+
+/***
 Copy pages
 ***/
 gulp.task('copypages', function() {
@@ -167,6 +189,8 @@ gulp.task(
         'copypages',
         'copylayout',
         'copyfonts',
+        'copyconfig',
+        'copyfunctions',
         'cucumber'
     ]
 );
@@ -180,7 +204,9 @@ gulp.task('serve', ['default'], function () {
         proxy: '<%= destRoot %>',
         files: [
             config.dest.root,
+            config.dest.config,
             config.dest.css,
+            config.dest.functions,
             config.dest.js,
             config.dest.libs,
             config.dest.views,
@@ -189,7 +215,9 @@ gulp.task('serve', ['default'], function () {
         injectChanges: true
     });
 
+    gulp.watch(config.watch.config, { interval: 1000 }, ['copyconfig', 'cucumber']);
     gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss', 'cucumber']);
+    gulp.watch(config.watch.functions, { interval: 1000 }, ['copyfunctions', 'cucumber']);
     gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs', 'cucumber']);
     gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout', 'cucumber']);
     gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages', 'cucumber']);
