@@ -116,6 +116,7 @@ module.exports = generator.Base.extend({
                 this.config.set({'projectName' : data.name });
                 var projectNameSlug = this.config.get('projectName');
                     projectNameSlug = projectNameSlug.replace(/\s+/g, '-');
+                    projectNameSlug = projectNameSlug.replace(/\&/g, 'and');
                     projectNameSlug = projectNameSlug.toLowerCase();
                 this.config.set('projectNameSlug', projectNameSlug);
 
@@ -137,6 +138,7 @@ module.exports = generator.Base.extend({
 
             var dirs = {
                 'template_css'          : this.templatePath() + '\\css\\',
+                'template_fonts'        : this.templatePath() + '\\fonts\\',
                 'template_gulp'         : this.templatePath() + '\\gulp\\',
                 'template_imgs'         : this.templatePath() + '\\imgs\\',
                 'template_js'           : this.templatePath() + '\\js\\',
@@ -155,6 +157,7 @@ module.exports = generator.Base.extend({
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
                 'src_css'               : this.destinationPath() + '\\src\\assets\\css\\',
+                'src_fonts'             : this.destinationPath() + '\\src\\assets\\fonts\\',
                 'src_layout'            : this.destinationPath() + '\\src\\layout\\',
                 'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
@@ -251,6 +254,13 @@ module.exports = generator.Base.extend({
             this.fs.copyTpl(
                 this.config.get('template_css') + '**/*',
                 this.config.get('src_css')
+            );
+        },
+
+        copyFonts: function() {
+            this.fs.copy(
+                this.config.get('template_fonts') + '**/*',
+                this.config.get('src_fonts')
             );
         },
 

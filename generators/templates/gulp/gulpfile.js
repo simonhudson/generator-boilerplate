@@ -126,6 +126,14 @@ gulp.task('imagemin', ['delimgs'], function () {
 });
 
 /***
+Copy Fonts
+***/
+gulp.task('copyfonts', function() {
+    return gulp.src(dir.src_fonts)
+        .pipe(gulp.dest(dir.dist_fonts));
+});
+
+/***
 Copy layout
 ***/
 gulp.task('copylayout', function() {
@@ -158,6 +166,7 @@ gulp.task(
         'imagemin',
         'copypages',
         'copylayout',
+        'copyfonts',
         'cucumber'
     ]
 );
