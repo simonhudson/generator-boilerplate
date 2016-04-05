@@ -7,7 +7,7 @@ Feature: Home page basic content
     Scenario: Home page title
         Given I am a user on the "Home" page
         When the "Home" page loads
-        Then there should be a "title" element on the "Home" page containing the text "<%= projectName %>"
+        Then there should be a "title" element on the "Home" page containing the text "Home | <%= projectName %>"
 
     Scenario: Home page heading
         Given I am a user on the "Home" page
