@@ -135,7 +135,7 @@ gulp.task('imagemin', ['delimgs'], function () {
 Copy Fonts
 ***/
 gulp.task('copyfonts', function() {
-    return gulp.src(config.src.fonts)
+    return gulp.src(config.src.fonts + '**/*')
         .pipe(gulp.dest(config.dest.fonts));
 });
 
