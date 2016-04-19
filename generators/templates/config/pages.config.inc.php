@@ -12,13 +12,13 @@ $pages = (object) array(
         'omitFromNav' => true
     ),
     'login' => (object) array(
-        'url' => 'login.php',
+        'url' => 'login',
         'mainNavText' => 'Log in',
         'pageTitle' => 'Log in',
         'omitFromNav' => true
     ),
     'logout' => (object) array(
-        'url' => 'logout.php',
+        'url' => 'logout',
         'mainNavText' => 'Log out',
         'pageTitle' => 'Log out',
         'omitFromNav' => true
