@@ -143,6 +143,7 @@ module.exports = generator.Base.extend({
                 'template_fonts'        : this.templatePath() + '\\fonts\\',
                 'template_functions'    : this.templatePath() + '\\functions\\',
                 'template_gulp'         : this.templatePath() + '\\gulp\\',
+                'template_htaccess'     : this.templatePath() + '\\htaccess\\',
                 'template_imgs'         : this.templatePath() + '\\imgs\\',
                 'template_includes'     : this.templatePath() + '\\includes\\',
                 'template_js'           : this.templatePath() + '\\js\\',
@@ -224,6 +225,14 @@ module.exports = generator.Base.extend({
             this._npmUpdateDependencies('cucumber');
             this._npmUpdateDependencies('chimp');
             this._npmUpdateDependencies('a11y');
+
+        },
+
+        copyHtaccess: function() {
+            this.fs.copy(
+                this.config.get('template_htaccess') + 'htaccess.txt',
+                this.config.get('dest_app') + '.htaccess'
+            );
 
         },
 
