@@ -2,7 +2,7 @@
 
 $site = (object) array(
     'name' => '<%= projectName %>',
-    'globalHeadingFragment' => ' | <%= projectName %>'
+    'globalHeadingFragment' => '<%= projectName %>'
 );
 
 ?>

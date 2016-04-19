@@ -1,0 +1,32 @@
+.step {
+    margin-bottom:15px;
+    padding:15px;
+}
+.step:last-child {
+    margin-bottom:0;
+}
+.progress {
+    height:40px;
+}
+.progress-bar {
+    align-items:center;
+    display:flex;
+    justify-content:center;
+}
+.pass-pct {
+    font-size:1.4em;
+    font-weight:bold;
+    vertical-align:0;
+}
+.toggle {
+    float:right;
+}
+.feature__name,
+.scenario__name {
+    cursor:pointer;
+}
+.feature-name__text,
+.scenario-name__text {
+    display:inline-block;
+    max-width:85%;
+}

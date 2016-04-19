@@ -58,7 +58,7 @@ module.exports = generator.Base.extend({
 
     _urlRoot: function() {
         var urlRoot = this.config.get('dest_root').split('htdocs');
-            urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + '/app/';
+            urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + 'app/';
         return urlRoot;
     },
 
@@ -151,14 +151,14 @@ module.exports = generator.Base.extend({
                 'template_pages'        : this.templatePath() + '\\pages\\',
                 'template_tests'        : this.templatePath() + '\\tests\\',
 
-                'dest_root'             : this.destinationPath(),
+                'dest_root'             : this.destinationPath() + '\\',
                 'dest_app'              : this.destinationPath() + '\\app\\',
                 'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
                 'dest_config'           : this.destinationPath() + '\\app\\config\\',
-                'dest_functions'           : this.destinationPath() + '\\app\\functions\\',
+                'dest_functions'        : this.destinationPath() + '\\app\\functions\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
-                'dest_tests'            : this.destinationPath(),
+                'dest_tests'            : this.destinationPath() + '\\tests\\',
 
                 'src_root'              : this.destinationPath() + '\\src\\',
                 'src_assets'            : this.destinationPath() + '\\src\\assets\\',
@@ -192,7 +192,8 @@ module.exports = generator.Base.extend({
                     '.sass-cache\n' +
                     'bower_components\n' +
                     'app\n' +
-                    '.yo-rc.json'
+                    '.yo-rc.json\n' +
+                    'tests/output/*.json'
                 );
         },
 
@@ -221,7 +222,8 @@ module.exports = generator.Base.extend({
 
             // Testing
             this._npmUpdateDependencies('cucumber');
-            this._npmUpdateDependencies('zombie');
+            this._npmUpdateDependencies('chimp');
+            this._npmUpdateDependencies('a11y');
 
         },
 
@@ -292,16 +294,19 @@ module.exports = generator.Base.extend({
         },
 
         copyTests: function() {
-
-            this.fs.copyTpl(
-                this.config.get('template_tests') + '/**/*',
-                this.destinationPath(
-                    this.config.get('dest_tests')),
-                    {
-                        destRoot: this._urlRoot(),
-                        projectName: this.config.get('projectName')
-                    }
+            this.fs.copy(
+                this.config.get('template_tests') + 'chimp.js',
+                this.config.get('dest_root') + 'chimp.js'
             );
+            this.fs.copyTpl(
+                this.config.get('template_tests') + '**/*',
+                this.config.get('dest_tests'),
+                {
+                    projectName: this.config.get('projectName'),
+                    urlRoot: this._urlRoot()
+                }
+            );
+            this.fs.delete(this.config.get('dest_tests') + 'chimp.js');
         }
 
     },

@@ -1,0 +1,69 @@
+<div class="container">
+    <div class="col-xs-12">
+        <div class="page-header">
+            <h1>Test results <small><%= projectName %></small></h1>
+        </div>
+        <span class="fa fa-refresh fa-spin fa-3x center-block text-center" ng-if="isLoading === true && !error"></span>
+        <p class="alert alert-danger" role="alert" ng-if="error && isLoading !== true">{{ error }}</p>
+    </div>
+</div>
+<div class="container" ng-show="!error && isLoading === false">
+    <div class="col-md-4">
+        <div class="well">
+            <p>
+                <span class="fa fa-clock-o"></span>&nbsp;13/04/2016 13:47GMT<br />
+                <span class="fa fa-globe"></span>&nbsp;<a href="<%= urlRoot %>" target="_blank"><%= urlRoot %></a>
+            </p>
+            <p>
+                <span class="lead"><strong>Total:</strong> {{ totalTests }}</span><br />
+                <input type="checkbox" id="toggle-passed" checked="true" ng-click="toggleArtifacts('success')" />&nbsp;
+                <label for="toggle-passed">Passed: {{ countPass }}</label><br />
+                <input type="checkbox" id="toggle-failed" checked="true" ng-click="toggleArtifacts('danger')" />&nbsp;
+                <label for="toggle-failed">Failed: {{ countFail }}</label><br />
+            </p>
+            <div class="progress">
+                <div class="progress-bar" ng-class="percentagePass === 100 ? 'progress-bar-success' : ''" role="progressbar" aria-valuenow="{{ percentagePass }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percentagePass }}%;">
+                    <span aria-hidden="true" class="fa fa-check-circle fa-2x" ng-if="percentagePass === 100">&nbsp;</span>
+                    <span class="pass-pct">{{ percentagePass }}% passing</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8">
+        <ul class="features list-unstyled">
+            <li class="feature" ng-repeat="feature in features">
+                <div id="createSlug(feature.id)">
+                    <h2 class="feature__name page-header" ng-click="showFeature = !showFeature">
+                        <span class="feature-name__text">{{ feature.name }}</span>
+                        <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showFeature ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                    </h2>
+                    <div ng-show="showFeature">
+                        <p class="feature__desc text-muted lead" ng-bind-html="formatClauses(feature.description)"></p>
+                        <ul class="scenarios list-unstyled">
+                            <li class="scenario" ng-repeat="scenario in feature.elements">
+                                <div class="panel panel-{{ getScenarioStatus(scenario) }}" id="createSlug(scenario.id)">
+                                    <div class="panel-heading">
+                                        <h3 class="scenario__name panel-title" ng-click="showScenario = !showScenario">
+                                            <strong class="scenario-name__text">{{ scenario.name }}</strong>
+                                            <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showScenario ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                        </h3>
+                                    </div>
+                                    <div class="panel-body" ng-show="showScenario">
+                                        <ul class="steps list-unstyled">
+                                            <li class="step" ng-class="step.result.status === 'passed' ? 'bg-success' : 'bg-danger'" ng-if="step.hidden !== true" ng-repeat="step in scenario.steps">
+                                                <span ng-class="getStatusIcon(step.result.status)" class="{{ getStatusClass(step.result.status) }}"></span>
+                                                <span class="step__keyword">{{ step.keyword }}</span>
+                                                <span class="step__name">{{ step.name }}</span>
+                                                <p ng-if="step.result.error_message" ng-bind-html="formatErrorMsg(step.result.error_message)"></p>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

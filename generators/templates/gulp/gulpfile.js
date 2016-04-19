@@ -183,12 +183,11 @@ gulp.task('copypages', function() {
 });
 
 /***
-Cucumber
+Tests
 ***/
-gulp.task('cucumber', function() {
-    return gulp.src('features/*').pipe(cucumber({
-        'steps': 'features/step-definitions/**/*.js',
-        'support': 'features/support/*.js'
+gulp.task('tests', function() {
+    return gulp.src('tests/features/*').pipe(cucumber({
+        'steps': 'tests/features/step-definitions/**/*.js'
     }));
 });
 
@@ -203,7 +202,7 @@ gulp.task(
         'copyconfig',
         'copyfunctions',
         'copyincludes',
-        'cucumber'
+        // 'tests'
     ]
 );
 
@@ -212,7 +211,7 @@ gulp.task('serve', ['default'], function () {
 
     browserSync = browserSync.create();
     browserSync.init({
-        notify: true,
+        notify: false,
         proxy: '<%= destRoot %>',
         files: [
             config.dest.root,

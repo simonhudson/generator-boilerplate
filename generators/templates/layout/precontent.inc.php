@@ -17,7 +17,7 @@ $currentPage = currentPage();
 <meta charset="utf-8"/>
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
-<title><?= (isset($pages->$currentPage->pageTitle) ? $pages->$currentPage->pageTitle : $pages->$currentPage->mainNavText).$site->globalHeadingFragment; ?></title>
+<title><?= $site->globalHeadingFragment; ?></title>
 <link href="<?= $paths->css; ?>main.min.css" rel="stylesheet" />
 <link rel="shortcut icon" href="<?= $paths->imgs; ?>favicon.ico">
 </head>

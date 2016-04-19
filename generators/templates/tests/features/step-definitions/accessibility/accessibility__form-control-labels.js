@@ -15,12 +15,15 @@ module.exports = function () {
             var formElements = this.browser.querySelectorAll('input, select, textarea');
 
             for (var i=0; i < formElements.length; i++) {
-                var elementId = formElements[i].getAttribute('id');
-                if (typeof elementId != 'string') {
-                    allElementsHaveId = false;
-                    self.onError('Missing ID on <' + formElements[i].nodeName.toLowerCase() + '> form element');
-                } else {
-                    checkElementHasLabel(elementId);
+                var isButton = (formElements[i].getAttribute('type') == 'submit' || formElements[i].getAttribute('type') == 'button');
+                if (!isButton) {
+                    var elementId = formElements[i].getAttribute('id');
+                    if (typeof elementId != 'string') {
+                        allElementsHaveId = false;
+                        self.onError('Missing ID on <' + formElements[i].nodeName.toLowerCase() + '> form element');
+                    } else {
+                        checkElementHasLabel(elementId);
+                    }
                 }
             }
             return (allElementsHaveId && allElementsHaveLabel);
