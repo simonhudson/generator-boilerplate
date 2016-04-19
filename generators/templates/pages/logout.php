@@ -6,7 +6,7 @@ session_start();
 include('config/pages.config.inc.php');
 include('functions/functions.inc.php');
 
-$returnUrl = getQueryStringValue('returnUrl');
+$returnUrl = (getQueryStringValue('returnUrl') !== null ? getQueryStringValue('returnUrl') : 'home');
 
 // Unset all of the session variables.
 $_SESSION = array();
