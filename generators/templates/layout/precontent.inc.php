@@ -6,6 +6,22 @@ include('config/pages.config.inc.php');
 include('config/paths.config.inc.php');
 include('functions/functions.inc.php');
 $currentPage = currentPage();
+
+if (isset($_POST['login__returnUrl'])) {
+    $returnUrl = $_POST['login__returnUrl'];
+}
+
+if (isset($_SESSION['isLoggedIn']) && $currentPage == 'login') {
+    header('Location: '.$pages->home->url);
+}
+// if (!isset($_SESSION['isLoggedIn']) && $currentPage != 'login' && $currentPage != 'register') {
+//     header('Location: '.$pages->login->url);
+// }
+if (isset($_POST['login__submit']) && $_POST['login__password'] === 'admin') {
+    $_SESSION['isLoggedIn'] = true;
+    header('Location: '.(isset($pages->$returnUrl->url) ? $pages->$returnUrl->url : $pages->home->url));
+}
+
 ?>
 <!doctype html>
 <!--[if lt IE 9]>
