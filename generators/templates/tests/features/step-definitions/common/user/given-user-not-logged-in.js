@@ -1,4 +1,4 @@
-var pages = require('../../../config/config.js').pages;
+var pages = require('../../../../config/config.js').pages;
 
 module.exports = function () {
 

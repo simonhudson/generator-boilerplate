@@ -1,5 +1,5 @@
-var pages = require('../../../config/config.js').pages;
-var slug = require('../../../config/page-slug.js').pageSlug;
+var pages = require('../../../../config/config.js').pages;
+var slug = require('../../../../config/page-slug.js').pageSlug;
 var a11y = require('a11y');
 var assert = require('assert');
 

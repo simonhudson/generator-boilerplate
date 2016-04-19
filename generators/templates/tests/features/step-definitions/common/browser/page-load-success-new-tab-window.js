@@ -1,5 +1,5 @@
-var pages = require('../../../config/config.js').pages;
-var slug = require('../../../config/page-slug.js').pageSlug;
+var pages = require('../../../../config/config.js').pages;
+var slug = require('../../../../config/page-slug.js').pageSlug;
 var assert = require('assert');
 
 module.exports = function () {
