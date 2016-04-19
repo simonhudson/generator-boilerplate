@@ -195,6 +195,7 @@ gulp.task(
     'default', [
         'minifycss',
         'minifylibs',
+        'minifyjs',
         'imagemin',
         'copypages',
         'copylayout',
