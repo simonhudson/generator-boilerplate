@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('config/site.config.inc.php');
+include('config/forms.config.inc.php');
 include('config/pages.config.inc.php');
 include('config/paths.config.inc.php');
 include('functions/functions.inc.php');
