@@ -226,11 +226,11 @@ gulp.task('serve', ['default'], function () {
         injectChanges: true
     });
 
-    gulp.watch(config.watch.config, { interval: 1000 }, ['copyconfig', 'cucumber']);
-    gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss', 'cucumber']);
-    gulp.watch(config.watch.functions, { interval: 1000 }, ['copyfunctions', 'cucumber']);
-    gulp.watch(config.watch.includes, { interval: 1000 }, ['copyincludes', 'cucumber']);
-    gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs', 'cucumber']);
-    gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout', 'cucumber']);
-    gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages', 'cucumber']);
+    gulp.watch(config.watch.config, { interval: 1000 }, ['copyconfig']);
+    gulp.watch(config.watch.css, { interval: 1000 }, ['minifycss']);
+    gulp.watch(config.watch.functions, { interval: 1000 }, ['copyfunctions']);
+    gulp.watch(config.watch.includes, { interval: 1000 }, ['copyincludes']);
+    gulp.watch(config.watch.js, { interval: 1000 }, ['minifyjs']);
+    gulp.watch(config.watch.layout, { interval: 1000 }, ['copylayout']);
+    gulp.watch(config.watch.pages, { interval: 1000 }, ['copypages']);
 });
