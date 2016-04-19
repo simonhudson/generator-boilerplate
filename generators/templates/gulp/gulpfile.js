@@ -120,7 +120,7 @@ gulp.task('minifyjs', ['concatjs'], function() {
 Minify libs
 ***/
 gulp.task('minifylibs', function() {
-    return gulp.src(config.dest.libs + '**/*.js')
+    return gulp.src(config.src.libs + '**/*.js')
         .pipe(uglify())
         .pipe(gulp.dest(config.dest.libs));
 });

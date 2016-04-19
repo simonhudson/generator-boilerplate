@@ -159,6 +159,7 @@ module.exports = generator.Base.extend({
                 'dest_functions'        : this.destinationPath() + '\\app\\functions\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
+                'dest_libs'             : this.destinationPath() + '\\app\\libs\\',
                 'dest_tests'            : this.destinationPath() + '\\tests\\',
 
                 'src_root'              : this.destinationPath() + '\\src\\',
@@ -169,6 +170,7 @@ module.exports = generator.Base.extend({
                 'src_functions'         : this.destinationPath() + '\\src\\functions\\',
                 'src_includes'          : this.destinationPath() + '\\src\\includes\\',
                 'src_layout'            : this.destinationPath() + '\\src\\layout\\',
+                'src_libs'              : this.destinationPath() + '\\src\\libs\\',
                 'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
                 'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
