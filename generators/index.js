@@ -236,6 +236,14 @@ module.exports = generator.Base.extend({
 
         },
 
+        copyLibs: function() {
+            this.fs.copy(
+                this.config.get('template_libs') + '/**/*',
+                this.config.get('src_libs')
+            );
+
+        },
+
         copyGulp: function() {
             this.fs.copyTpl(
                 this.config.get('template_gulp') + '/**/*',
