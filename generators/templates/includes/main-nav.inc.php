@@ -8,7 +8,7 @@
                     if (!isset($page->omitFromNav)): ?>
                         <?php $subNavMenu = ($page->url !== $siteRoot ? $page->url : 'home'); ?>
                         <li class="main-nav__item level-1__item main-nav__item">
-                            <a class="main-nav__link level-1__link main-nav__link <?= ($page->url === $currentPage) ? ' current' : ''; ?>" data-hook="main-nav__<?= (empty($linkHook) ? 'home' : $linkHook); ?>" href="<?= $siteRoot.$page->url; ?>">
+                            <a class="main-nav__link level-1__link main-nav__link <?= ($page->url === $currentPage) ? ' current' : ''; ?>" data-hook="main-nav__<?= (empty($linkHook) ? 'home' : $linkHook); ?>" href="<?= ($page->url !== $siteRoot ? $siteRoot: '').$page->url; ?>">
                                 <span aria-hidden="true" class="fa fa-<?=$page->icon; ?>"></span>&nbsp;
                                 <span class="main-nav__text"><?= $page->mainNavText; ?></span>
                             </a>
