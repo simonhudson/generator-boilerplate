@@ -17,7 +17,7 @@ $pages = (object) array(
         'omitFromNav' => true
     ),
     'home' => (object) array(
-        'url' => '',
+        'url' => $siteRoot,
         'mainNavText' => 'Home',
         'pageTitle' => 'Home',
         'icon' => 'home',
