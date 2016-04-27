@@ -14,3 +14,13 @@ main a {
     }
 
 }
+.menu-toggle {
+    background:0;
+    border:0;
+    color:$palette-body;
+    cursor:pointer;
+    padding:10px;
+    position:absolute;
+    right:0;
+    top:$spacing-sm;
+}

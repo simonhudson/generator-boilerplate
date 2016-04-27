@@ -4,13 +4,6 @@ $siteRoot = './';
 
 $pages = (object) array(
 
-    'home' => (object) array(
-        'url' => $siteRoot,
-        'mainNavText' => 'Home',
-        'pageTitle' => 'Home',
-        'hiddenPageHeading' => true,
-        'omitFromNav' => true
-    ),
     'login' => (object) array(
         'url' => 'login',
         'mainNavText' => 'Log in',
@@ -22,6 +15,33 @@ $pages = (object) array(
         'mainNavText' => 'Log out',
         'pageTitle' => 'Log out',
         'omitFromNav' => true
+    ),
+    'home' => (object) array(
+        'url' => '',
+        'mainNavText' => 'Home',
+        'pageTitle' => 'Home',
+        'icon' => 'home',
+        'hiddenPageHeading' => true
+    ),
+    'about' => (object) array(
+        'url' => 'about',
+        'mainNavText' => 'About us',
+        'pageTitle' => 'About us',
+        'icon' => 'map-marker',
+        'hasSubNav' => true
+    ),
+    'employees' => (object) array(
+        'url' => 'employees',
+        'mainNavText' => 'Employees',
+        'pageTitle' => 'Employees',
+        'icon' => 'users',
+        'hasSubNav' => true
+    ),
+    'contact' => (object) array(
+        'url' => 'contact',
+        'mainNavText' => 'Contact us',
+        'pageTitle' => 'Contact us',
+        'icon' => 'envelope-o',
     )
 
 );

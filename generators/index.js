@@ -159,7 +159,6 @@ module.exports = generator.Base.extend({
                 'dest_functions'        : this.destinationPath() + '\\app\\functions\\',
                 'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
                 'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
-                'dest_libs'             : this.destinationPath() + '\\app\\libs\\',
                 'dest_tests'            : this.destinationPath() + '\\tests\\',
 
                 'src_root'              : this.destinationPath() + '\\src\\',
@@ -170,7 +169,7 @@ module.exports = generator.Base.extend({
                 'src_functions'         : this.destinationPath() + '\\src\\functions\\',
                 'src_includes'          : this.destinationPath() + '\\src\\includes\\',
                 'src_layout'            : this.destinationPath() + '\\src\\layout\\',
-                'src_libs'              : this.destinationPath() + '\\src\\libs\\',
+                'src_libs'              : this.destinationPath() + '\\src\\assets\\libs\\',
                 'src_pages'             : this.destinationPath() + '\\src\\pages\\',
                 'src_imgs'              : this.destinationPath() + '\\src\\assets\\imgs\\',
                 'src_js'                : this.destinationPath() + '\\src\\assets\\js\\'
@@ -258,6 +257,16 @@ module.exports = generator.Base.extend({
 
         },
 
+        copyIncludes: function() {
+            this.fs.copyTpl(
+                this.config.get('template_includes') + '/**/*',
+                this.config.get('src_includes'),
+                {
+                }
+            );
+
+        },
+
         copyLayout: function() {
             this.fs.copyTpl(
                 this.config.get('template_layout') + '/*.php',
@@ -305,6 +314,13 @@ module.exports = generator.Base.extend({
             );
         },
 
+        copyJs: function() {
+            this.fs.copyTpl(
+                this.config.get('template_js') + '**/*',
+                this.config.get('src_js')
+            );
+        },
+
         copyFonts: function() {
             this.fs.copy(
                 this.config.get('template_fonts') + '**/*',
@@ -318,12 +334,17 @@ module.exports = generator.Base.extend({
                 this.config.get('dest_root') + 'chimp.js'
             );
             this.fs.copyTpl(
-                this.config.get('template_tests') + '**/*',
+                this.config.get('template_tests') + '**/*.{css,html,js,json,feature}',
                 this.config.get('dest_tests'),
                 {
                     projectName: this.config.get('projectName'),
                     urlRoot: this._urlRoot()
                 }
+            );
+            // Vanilla copy font files - EJS doesn't like them as it finds <% tags in them
+            this.fs.copy(
+                this.config.get('template_tests') + '**/*.{eot,svg,ttf,woff,woff2}',
+                this.config.get('dest_tests')
             );
             this.fs.delete(this.config.get('dest_tests') + 'chimp.js');
         }

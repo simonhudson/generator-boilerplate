@@ -4,6 +4,7 @@ include('config/site.config.inc.php');
 include('config/forms.config.inc.php');
 include('config/pages.config.inc.php');
 include('config/paths.config.inc.php');
+include('config/sub-nav.config.inc.php');
 include('functions/functions.inc.php');
 $currentPage = currentPage();
 
@@ -35,6 +36,7 @@ if (isset($_POST['login__submit']) && $_POST['login__password'] === 'admin') {
 <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
 <meta content="width=device-width, initial-scale=1" name="viewport" />
 <title><?= $site->globalHeadingFragment; ?></title>
+<link href="<?= $paths->libs; ?>font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link href="<?= $paths->css; ?>main.min.css" rel="stylesheet" />
 <link rel="shortcut icon" href="<?= $paths->imgs; ?>favicon.ico">
 </head>
@@ -48,10 +50,21 @@ if (isset($_POST['login__submit']) && $_POST['login__password'] === 'admin') {
         </ul>
     </nav>
 
-    <p>
+    <header class="header--global">
+
+        <button class="js-menu-toggle menu-toggle">
+            <span class="fa fa-bars fa-2x"></span><br />
+            <span class="hidden">Menu</span>
+        </button>
+
+        <?php include ('includes/main-nav.inc.php'); ?>
+
+    </header>
+
+<!--     <p>
         <?php if (isset($_SESSION['isLoggedIn'])): ?>
         <a href="<?= $pages->logout->url; ?>?returnUrl=<?= $currentPage; ?>"><?= $pages->logout->mainNavText; ?></a>
         <?php else: ?>
         <a href="<?= $pages->login->url; ?>?returnUrl=<?= $currentPage; ?>"><?= $pages->login->mainNavText; ?></a>
         <?php endif; ?>
-    </p>
+    </p> -->

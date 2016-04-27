@@ -22,7 +22,7 @@ var config = {
         css:            config.src.assets + 'css/',
         fonts:          config.src.assets + 'fonts/',
         functions:      dirs.src + 'functions/',
-        includes:         dirs.src + 'includes/',
+        includes:       dirs.src + 'includes/',
         pages:          dirs.src + 'pages/',
         imgs:           config.src.assets + 'imgs/',
         js:             config.src.assets + 'js/',
@@ -117,11 +117,11 @@ gulp.task('minifyjs', ['concatjs'], function() {
 });
 
 /***
-Minify libs
+Copy libs
 ***/
-gulp.task('minifylibs', function() {
-    return gulp.src(config.src.libs + '**/*.js')
-        .pipe(uglify())
+gulp.task('copylibs', function() {
+    return gulp.src(config.src.libs + '**/*')
+        // .pipe(uglify())
         .pipe(gulp.dest(config.dest.libs));
 });
 
@@ -194,7 +194,7 @@ gulp.task('tests', function() {
 gulp.task(
     'default', [
         'minifycss',
-        'minifylibs',
+        'copylibs',
         'minifyjs',
         'imagemin',
         'copypages',

@@ -29,7 +29,7 @@ module.exports = {
   // you may run out of memory. Use browser.setViewportSize to make the
   // viewport size smaller.
   saveScreenshotsToReport: false,
-  jsonOutput: './tests/output/cucumber-output.json',
+  jsonOutput: './tests/output/data/results.json',
   compiler: 'js:' + path.resolve(__dirname, 'node_modules/chimp/dist/lib/babel-register.js'),
 
   // - - - - SELENIUM  - - - -
