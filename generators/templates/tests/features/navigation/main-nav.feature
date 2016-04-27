@@ -15,9 +15,3 @@ Feature: Main navigation
         When I navigate to the "Home" page
         And I click on the element "[data-hook=main-nav__home]"
         Then the browser loads the "Home" page
-
-    Scenario: Main navigation links: Log in
-        Given I am a user
-        When I navigate to the "Home" page
-        And I click on the element "[data-hook=main-nav__login]"
-        Then the browser loads the "Log in" page
