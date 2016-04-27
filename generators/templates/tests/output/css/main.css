@@ -5,17 +5,12 @@
 .step:last-child {
     margin-bottom:0;
 }
-.progress {
-    height:40px;
-}
 .progress-bar {
     align-items:center;
     display:flex;
     justify-content:center;
 }
 .pass-pct {
-    font-size:1.4em;
-    font-weight:bold;
     vertical-align:0;
 }
 .toggle {
@@ -29,4 +24,7 @@
 .scenario-name__text {
     display:inline-block;
     max-width:85%;
+}
+a {
+    cursor:pointer;
 }

@@ -3,7 +3,13 @@
     var Results = function($http) {
         
         var getData = function() {
-            return $http.get('cucumber-output.json').then(function(response) {
+            return $http.get('data/results.json').then(function(response) {
+                return response.data;
+            });
+        };
+
+        var getMeta = function() {
+            return $http.get('data/results-meta.json').then(function(response) {
                 return response.data;
             });
         };
@@ -47,6 +53,7 @@
 
         return {
             getData: getData,
+            getMeta: getMeta,
             getStatusObj: getStatusObj,
             createSlug: createSlug
         };

@@ -1,26 +1,184 @@
 <!DOCTYPE html>
 <html lang="en"  ng-app="app" >
 <head>
-<title>Test results - <%= projectName %></title>
+<title>Test results</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css" />
+<link rel="stylesheet" href="libs/bootstrap/bootstrap.min.css" />
+<link rel="stylesheet" href="libs/font-awesome/css/font-awesome.min.css" />
 <link rel="stylesheet" href="css/main.css" />
 </head>
 <body>
 
 <main id="main-content">
 
-    <div ng-view></div>
+    <div ng-controller="ResultsController">
+
+        <div class="container">
+            <div class="col-xs-12">
+                <h1 class="page-header">Test results</h1>
+            </div>
+        </div>
+        <div class="container" ng-show="!error && isLoading === false && features.length">
+            <div class="col-md-4">
+                <div class="well">
+                    <p>
+                        <span class="fa fa-clock-o"></span>&nbsp;{{ timestamp }}<br />
+                        <span class="fa fa-globe"></span>&nbsp;<a href="{{ environment }}" target="_blank">{{ environment }}</a>
+                    </p>
+                    <div class="progress">
+                        <div class="progress-bar" ng-class="percentagePass === 100 ? 'progress-bar-success' : ''" role="progressbar" aria-valuenow="{{ percentagePass }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ percentagePass }}%;">
+                            <span aria-hidden="true" class="fa fa-check-circle fa-2x" ng-if="percentagePass === 100">&nbsp;</span>
+                            <span class="pass-pct">{{ percentagePass }}% passing</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8">
+                <ul class="nav nav-tabs nav-justified" role="tablist">
+                    <li role="presentation" class="active">
+                        <a href="#all" aria-controls="all" role="tab" data-toggle="tab"><span class="text-primary"><strong>All&nbsp;</strong>({{ countTotal }})</span></a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#passed" aria-controls="passed" role="tab" data-toggle="tab"><span class="text-success"><strong>Passed&nbsp;</strong>({{ countPass }})</span></a>
+                    </li>
+                    <li role="presentation">
+                        <a href="#failed" aria-controls="failed" role="tab" data-toggle="tab"><span class="text-danger"><strong>Failed&nbsp;</strong>({{ countFail }})</span></a>
+                    </li>
+                </ul>
+
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <div role="tabpanel" class="tab-pane active" id="all">
+                        <ul class="features list-unstyled">
+                            <li class="feature" ng-repeat="feature in features">
+                                <div id="createSlug(feature.id)">
+                                    <h2 class="feature__name page-header text-{{ getFeatureStatus(feature) }}" ng-click="showFeature = !showFeature">
+                                        <span aria-hidden="true" class="fa" ng-class="getFeatureStatus(feature) === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'"></span>
+                                        <span class="feature-name__text">{{ feature.name }}</span>
+                                        <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showFeature ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                    </h2>
+                                    <div ng-show="showFeature">
+                                        <p class="feature__desc text-muted lead" ng-bind-html="formatClauses(feature.description)"></p>
+                                        <ul class="scenarios list-unstyled">
+                                            <li class="scenario" ng-repeat="scenario in feature.elements">
+                                                <div class="panel panel-{{ getScenarioStatus(scenario) }}" id="createSlug(scenario.id)">
+                                                    <div class="panel-heading">
+                                                        <h3 class="scenario__name panel-title" ng-click="showScenario = !showScenario">
+                                                            <strong class="scenario-name__text">{{ scenario.name }}</strong>
+                                                            <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showScenario ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body" ng-show="showScenario">
+                                                        <ul class="steps list-unstyled">
+                                                            <li class="step" ng-class="step.result.status === 'passed' ? 'bg-success' : 'bg-danger'" ng-if="step.hidden !== true" ng-repeat="step in scenario.steps">
+                                                                <span ng-class="getStatusIcon(step.result.status)" class="{{ getStatusClass(step.result.status) }}"></span>
+                                                                <span class="step__keyword">{{ step.keyword }}</span>
+                                                                <span class="step__name">{{ step.name }}</span>
+                                                                <p ng-if="step.result.error_message" ng-bind-html="formatErrorMsg(step.result.error_message)"></p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="passed">
+                        <ul class="features list-unstyled">
+                            <li class="feature" ng-repeat="feature in features" ng-if="getFeatureStatus(feature) === 'success'">
+                                <div id="createSlug(feature.id)">
+                                    <h2 class="feature__name page-header text-{{ getFeatureStatus(feature) }}" ng-click="showFeature = !showFeature">
+                                        <span aria-hidden="true" class="fa" ng-class="getFeatureStatus(feature) === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'"></span>
+                                        <span class="feature-name__text">{{ feature.name }}</span>
+                                        <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showFeature ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                    </h2>
+                                    <div ng-show="showFeature">
+                                        <p class="feature__desc text-muted lead" ng-bind-html="formatClauses(feature.description)"></p>
+                                        <ul class="scenarios list-unstyled">
+                                            <li class="scenario" ng-repeat="scenario in feature.elements">
+                                                <div class="panel panel-{{ getScenarioStatus(scenario) }}" id="createSlug(scenario.id)">
+                                                    <div class="panel-heading">
+                                                        <h3 class="scenario__name panel-title" ng-click="showScenario = !showScenario">
+                                                            <strong class="scenario-name__text">{{ scenario.name }}</strong>
+                                                            <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showScenario ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body" ng-show="showScenario">
+                                                        <ul class="steps list-unstyled">
+                                                            <li class="step" ng-class="step.result.status === 'passed' ? 'bg-success' : 'bg-danger'" ng-if="step.hidden !== true" ng-repeat="step in scenario.steps">
+                                                                <span ng-class="getStatusIcon(step.result.status)" class="{{ getStatusClass(step.result.status) }}"></span>
+                                                                <span class="step__keyword">{{ step.keyword }}</span>
+                                                                <span class="step__name">{{ step.name }}</span>
+                                                                <p ng-if="step.result.error_message" ng-bind-html="formatErrorMsg(step.result.error_message)"></p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div role="tabpanel" class="tab-pane" id="failed">
+                        <ul class="features list-unstyled">
+                            <li class="feature" ng-repeat="feature in features" ng-if="getFeatureStatus(feature) === 'danger'">
+                                <div id="createSlug(feature.id)">
+                                    <h2 class="feature__name page-header text-{{ getFeatureStatus(feature) }}" ng-click="showFeature = !showFeature">
+                                        <span aria-hidden="true" class="fa" ng-class="getFeatureStatus(feature) === 'success' ? 'fa-check-circle' : 'fa-exclamation-circle'"></span>
+                                        <span class="feature-name__text">{{ feature.name }}</span>
+                                        <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showFeature ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                    </h2>
+                                    <div ng-show="showFeature">
+                                        <p class="feature__desc text-muted lead" ng-bind-html="formatClauses(feature.description)"></p>
+                                        <ul class="scenarios list-unstyled">
+                                            <li class="scenario" ng-repeat="scenario in feature.elements">
+                                                <div class="panel panel-{{ getScenarioStatus(scenario) }}" id="createSlug(scenario.id)">
+                                                    <div class="panel-heading">
+                                                        <h3 class="scenario__name panel-title" ng-click="showScenario = !showScenario">
+                                                            <strong class="scenario-name__text">{{ scenario.name }}</strong>
+                                                            <span aria-hidden="true" class="fa toggle toggle-feature" ng-class="showScenario ? 'fa-chevron-up' : 'fa-chevron-down'"></span>
+                                                        </h3>
+                                                    </div>
+                                                    <div class="panel-body" ng-show="showScenario">
+                                                        <ul class="steps list-unstyled">
+                                                            <li class="step" ng-class="step.result.status === 'passed' ? 'bg-success' : 'bg-danger'" ng-if="step.hidden !== true" ng-repeat="step in scenario.steps">
+                                                                <span ng-class="getStatusIcon(step.result.status)" class="{{ getStatusClass(step.result.status) }}"></span>
+                                                                <span class="step__keyword">{{ step.keyword }}</span>
+                                                                <span class="step__name">{{ step.name }}</span>
+                                                                <p ng-if="step.result.error_message" ng-bind-html="formatErrorMsg(step.result.error_message)"></p>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
     
 </main>
 
-<script src="http://code.jquery.com/jquery-1.12.3.min.js" integrity="sha256-aaODHAgvwQW1bFOGXMeX+pC4PZIPsvn2h1sArYOhgXQ=" crossorigin="anonymous"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-route.js"></script>
+<script src="libs/jquery/dist/jquery.js"></script>
+<script src="libs/angular/angular.js"></script>
+<script src="libs/angular-route/angular-route.js"></script>
 <script src="js/app.js"></script>
 <script src="js/services/utils.js"></script>
 <script src="js/services/results.js"></script>
 <script src="js/controllers/ResultsController.js"></script>
+<script src="libs/bootstrap/tab.js"></script>
+<script src="js/main.js"></script>
 </body>
 </html>

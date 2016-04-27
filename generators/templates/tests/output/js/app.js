@@ -5,7 +5,7 @@
     app.config(function($routeProvider) {
         $routeProvider
             .when('/results', {
-                templateUrl: 'views/results.html',
+                // templateUrl: 'views/results.html',
                 controller: 'ResultsController'
             })
             .otherwise({redirectTo: '/results'});

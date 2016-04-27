@@ -20,6 +20,19 @@
             }
         };
 
+        var onMeta = function(data) {
+            var timestamp = data.timestamp.split('-');
+                y = timestamp[0].substring(0, 4);
+                m = timestamp[0].substring(4, 6);
+                d = timestamp[0].substring(6, 8);
+                h = timestamp[1].substring(0, 2);
+                mi = timestamp[1].substring(2, 4);
+                s = timestamp[1].substring(4, 6);
+                time = timestamp[1];
+            $scope.timestamp = d + '/' + m + '/' + y + ', ' + h + ':' + mi + ':' + s;
+            $scope.environment = data.environment;
+        };
+
         $scope.createSlug = function(string) {
             return Results.createSlug(string);
         };
@@ -45,12 +58,12 @@
                 $scope.countPass += data.scenarios[i].pass;
                 $scope.countFail += data.scenarios[i].fail;
             }
-            $scope.totalTests = $scope.countPass + $scope.countFail;
-            $scope.percentagePass = Utils.getPercentage($scope.countPass, $scope.totalTests);
-            $scope.percentageFail = Utils.getPercentage($scope.countFail, $scope.totalTests);
+            $scope.countTotal = $scope.countPass + $scope.countFail;
+            $scope.percentagePass = Utils.getPercentage($scope.countPass, $scope.countTotal);
+            $scope.percentageFail = Utils.getPercentage($scope.countFail, $scope.countTotal);
         };
 
-        $scope.getScenarioStatus = function(scenario) {
+        var getScenarioStatus = function(scenario) {
             var scenarioObj = {
                 pass:0,
                 fail:0
@@ -71,6 +84,40 @@
                 }
             }
             return scenarioStatus;
+        };
+
+        var getFeatureStatus = function(feature) {
+            console.log(feature);
+            var featureObj = {
+                pass:0,
+                fail:0
+            };
+
+            for (var i=0; i < feature.elements.length; i++) {
+                var scenario = feature.elements[i];
+                if (getScenarioStatus(scenario) === 'success') {
+                    featureObj.pass++;
+                }
+                if (getScenarioStatus(scenario) === 'danger') {
+                    featureObj.fail++;
+                }
+                if (featureObj.pass > 0 && featureObj.fail === 0) {
+                    featureStatus = 'success';
+                }
+                if (featureObj.fail > 0) {
+                    featureStatus = 'danger';
+                }
+            }
+            return featureStatus;
+
+        };
+
+        $scope.getFeatureStatus = function(feature) {
+            return getFeatureStatus(feature);
+        };
+
+        $scope.getScenarioStatus = function(scenario) {
+            return getScenarioStatus(scenario);
         };
 
         $scope.getStatusClass = function(status) {
@@ -123,6 +170,7 @@
             return $sce.trustAsHtml(message);
         };
 
+        $scope.noData = 'No data to display. Please run your tests.';
         $scope.showFeature = true;
         $scope.showScenario = true;
         $scope.isLoading = true;
@@ -130,6 +178,7 @@
         $scope.percentagePass = 0;
         $scope.countFail = 0;
         $scope.percentageFail = 0;
+        Results.getMeta().then(onMeta, onError);
         Results.getData().then(onData, onError);
 
     };
