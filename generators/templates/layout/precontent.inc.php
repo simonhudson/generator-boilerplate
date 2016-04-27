@@ -52,19 +52,17 @@ if (isset($_POST['login__submit']) && $_POST['login__password'] === 'admin') {
 
     <header class="header--global">
 
-        <button class="js-menu-toggle menu-toggle">
+        <div class="logo__wrap">
+            <a data-hook="header-logo__link" href="<?= $siteRoot; ?>">
+                <img alt="<%= projectName %> home" class="logo__img" data-hook="header-logo" src="<?= $paths->imgs; ?>logo.png" />
+            </a>
+        </div>
+
+        <button class="js-menu-toggle menu-toggle" data-hook="main-nav__toggle">
             <span class="fa fa-bars fa-2x"></span><br />
             <span class="hidden">Menu</span>
         </button>
 
-        <?php include ('includes/main-nav.inc.php'); ?>
-
     </header>
 
-<!--     <p>
-        <?php if (isset($_SESSION['isLoggedIn'])): ?>
-        <a href="<?= $pages->logout->url; ?>?returnUrl=<?= $currentPage; ?>"><?= $pages->logout->mainNavText; ?></a>
-        <?php else: ?>
-        <a href="<?= $pages->login->url; ?>?returnUrl=<?= $currentPage; ?>"><?= $pages->login->mainNavText; ?></a>
-        <?php endif; ?>
-    </p> -->
+    <?php include ('includes/main-nav.inc.php'); ?>

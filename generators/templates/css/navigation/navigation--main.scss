@@ -1,17 +1,25 @@
 .main-nav--level-1 {
     background:#282828;
     left:-100%;
+    overflow:auto;
     position:absolute;
     top:0;
         -webkit-transition:left .3s linear;
         -moz-transition:left .3s linear;
         -ms-transition:left .3s linear;
     transition:left .3s linear;
-    z-index:1;
-}
-.main-nav--level-1 {
     width:80%;
-    overflow:auto;
+    z-index:1;
+
+    @include bp($switch-layout) {
+        @include full-width();
+        height:auto;
+        left:0;
+        overflow:visible;
+        position:static;
+        top:auto;
+    }
+
 }
 .main-nav--level-1.is-open {
     left:0;
@@ -21,6 +29,10 @@
     list-style:none outside;
     padding:0;
     position:relative;
+
+    @include bp($switch-layout) {
+        display:inline;
+    }
 }
 .main-nav__link {
     @include padding();
@@ -28,6 +40,11 @@
     display:block;
     font-weight:bold;
     text-decoration:none;
+
+    @include bp($switch-layout) {
+        display:inline;
+    }
+
 }
 .level-1__link {
     text-transform:uppercase;
@@ -56,6 +73,10 @@
 
     &.active {
         @include rotate(180deg);
+    }
+
+    @include bp($switch-layout) {
+        @include hidden();
     }
 
 }

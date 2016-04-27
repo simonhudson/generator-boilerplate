@@ -13,6 +13,10 @@
         position:relative;
     }
 
+    @include bp($switch-layout) {
+        position:static;
+    }
+
 }
 .logo__wrap {
     @include position-tl(5px, 0);
@@ -24,19 +28,4 @@
 .logo__img {
     height:($global-header-height - pxToEm($spacing));
     width:auto;
-}
-.strapline__wrap {
-    @include position-tr(20px, 0);
-    @include strong();
-    text-align:right;
-    text-transform:uppercase;
-
-    span {
-        display:none;
-
-        @include bp($bp-1) {
-            display:inline;
-        }
-
-    }
 }

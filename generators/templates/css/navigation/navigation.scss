@@ -23,4 +23,9 @@ main a {
     position:absolute;
     right:0;
     top:$spacing-sm;
+
+    @include bp($switch-layout) {
+        @include hidden();
+    }
+    
 }

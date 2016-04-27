@@ -7,7 +7,7 @@ Feature: Main navigation
     Scenario: Main navigation present
         Given I am a user
         When I navigate to the "Home" page
-        And the viewport "width" is "more than" "700"
+        And the viewport "width" is "more than" "1024"
         Then there is a "[data-hook=main-nav]" element
 
     Scenario: Main navigation links: Home
@@ -16,26 +16,8 @@ Feature: Main navigation
         And I click on the element "[data-hook=main-nav__home]"
         Then the browser loads the "Home" page
 
-    Scenario: Main navigation links: Home
+    Scenario: Main navigation links: Log in
         Given I am a user
         When I navigate to the "Home" page
-        And I click on the element "[data-hook=main-nav__credit-cards]"
-        Then the browser loads the "Credit Cards" page
-
-    Scenario: Main navigation links: Home
-        Given I am a user
-        When I navigate to the "Home" page
-        And I click on the element "[data-hook=main-nav__loans]"
-        Then the browser loads the "Loans" page
-
-    Scenario: Main navigation links: Home
-        Given I am a user
-        When I navigate to the "Home" page
-        And I click on the element "[data-hook=main-nav__mortgages]"
-        Then the browser loads the "Mortgages" page
-
-    Scenario: Main navigation links: Home
-        Given I am a user
-        When I navigate to the "Home" page
-        And I click on the element "[data-hook=main-nav__help]"
-        Then the browser loads the "About" page
+        And I click on the element "[data-hook=main-nav__login]"
+        Then the browser loads the "Log in" page
