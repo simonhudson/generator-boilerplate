@@ -58,13 +58,13 @@ module.exports = generator.Base.extend({
 
     _urlRoot: function() {
         var urlRoot = this.config.get('dest_root').split('htdocs');
-            urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + 'app/';
+            urlRoot = 'http://localhost' + urlRoot[1].replace(/\\/g, '/') + 'build/';
         return urlRoot;
     },
 
     _npmUpdateDependencies: function(thePackage, version) {
         var packageContents = this.fs.readJSON(this.config.get('dest_root') + '\\package.json');
-            packageContents.dependencies[thePackage] = '*';
+            packageContents.devDependencies[thePackage] = '*';
         this.fs.writeJSON(this.config.get('dest_root') + '\\package.json', packageContents);
     },
 
@@ -112,7 +112,7 @@ module.exports = generator.Base.extend({
                 type    : 'input',
                 name    : 'name',
                 message : 'Your project name',
-                default : this.appname // Default to current folder name
+                default : this.buildname // Default to current folder name
             }, function(data) {
                 this.config.set({'projectName' : data.name });
                 var projectNameSlug = this.config.get('projectName');
@@ -153,12 +153,12 @@ module.exports = generator.Base.extend({
                 'template_tests'        : this.templatePath() + '\\tests\\',
 
                 'dest_root'             : this.destinationPath() + '\\',
-                'dest_app'              : this.destinationPath() + '\\app\\',
-                'dest_assets'           : this.destinationPath() + '\\app\\assets\\',
-                'dest_config'           : this.destinationPath() + '\\app\\config\\',
-                'dest_functions'        : this.destinationPath() + '\\app\\functions\\',
-                'dest_includes'         : this.destinationPath() + '\\app\\includes\\',
-                'dest_layout'           : this.destinationPath() + '\\app\\layout\\',
+                'dest_build'            : this.destinationPath() + '\\build\\',
+                'dest_assets'           : this.destinationPath() + '\\build\\assets\\',
+                'dest_config'           : this.destinationPath() + '\\build\\config\\',
+                'dest_functions'        : this.destinationPath() + '\\build\\functions\\',
+                'dest_includes'         : this.destinationPath() + '\\build\\includes\\',
+                'dest_layout'           : this.destinationPath() + '\\build\\layout\\',
                 'dest_tests'            : this.destinationPath() + '\\tests\\',
 
                 'src_root'              : this.destinationPath() + '\\src\\',
@@ -193,7 +193,7 @@ module.exports = generator.Base.extend({
                     'node_modules\n' +
                     '.sass-cache\n' +
                     'bower_components\n' +
-                    'app\n' +
+                    'build\n' +
                     '.yo-rc.json\n' +
                     'tests/output/*.json'
                 );
@@ -232,7 +232,7 @@ module.exports = generator.Base.extend({
         copyHtaccess: function() {
             this.fs.copy(
                 this.config.get('template_htaccess') + 'htaccess.txt',
-                this.config.get('dest_app') + '.htaccess'
+                this.config.get('dest_build') + '.htaccess'
             );
 
         },
